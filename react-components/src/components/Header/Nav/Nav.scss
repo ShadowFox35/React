@@ -1,0 +1,22 @@
+$main-color: #224c3c;
+
+.navigation {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  &_item {
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    &_link {
+      text-decoration: none;
+      color: $main-color;
+      font-family: 'Montserrat', sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+}
