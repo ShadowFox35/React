@@ -11,7 +11,6 @@ import clock from '../../assets/clock.svg';
 import basket from '../../assets/icons/basket_icon.svg';
 import faves from '../../assets/icons/faves_icon.svg';
 
-import Search from './Search/Search';
 import Navigation from './Nav/Nav';
 
 const Header: React.FC = () => {
