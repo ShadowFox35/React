@@ -4,8 +4,12 @@ export interface navElemType {
 }
 
 export interface catalogElemType {
-  url: string;
-  text: string;
+  category: string;
+  name: string;
+  brand: string;
+  structure: string;
+  weight: string;
+  length: string;
   price: number;
-  favorite: boolean;
+  url: string;
 }

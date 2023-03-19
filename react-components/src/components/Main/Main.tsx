@@ -5,7 +5,7 @@ import Catalog from './Catalog/Catalog';
 import './Main.scss';
 
 const Main: React.FC = () => {
-  document.title = 'Главная';
+  document.title = 'main';
   return (
     <div className="container">
       <Catalog />
