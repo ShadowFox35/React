@@ -1,11 +1,11 @@
-import { headerNav } from 'constants/headerNav';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { navElemType } from 'types/objects';
+import { headerNav } from 'constants/headerNav';
 
 import './Nav.scss';
 
-const Menu: React.FC = () => {
+const Navigation: React.FC = () => {
   document.title = 'Главная';
   return (
     <nav className="navigation">
@@ -20,4 +20,4 @@ const Menu: React.FC = () => {
   );
 };
 
-export default Menu;
+export default Navigation;

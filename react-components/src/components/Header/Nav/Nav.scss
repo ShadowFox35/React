@@ -1,9 +1,9 @@
-$main-color: #224c3c;
-
 .navigation {
+  width: 45%;
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: flex-start;
+  gap: 30px;
   &_item {
     &:hover {
       text-decoration: underline;
@@ -11,7 +11,7 @@ $main-color: #224c3c;
     }
     &_link {
       text-decoration: none;
-      color: $main-color;
+      color: #424242;
       font-family: 'Montserrat', sans-serif;
       font-style: normal;
       font-weight: 600;

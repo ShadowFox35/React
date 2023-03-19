@@ -6,7 +6,7 @@ import './Footer.scss';
 const Footer: React.FC = () => {
   return (
     <div className="header">
-      <button>header</button>
+      <button>Footer</button>
     </div>
   );
 };

@@ -17,18 +17,9 @@ const Search: React.FC = () => {
           name="search"
           value={0}
           tabIndex={0}
-          // onKeyDown={handleAddCity}
-          // onChange={readInput}
         />
         <div className="search_icon">
-          <img
-            src={search}
-            alt="search icon"
-            className="icon"
-            // onClick={() => {
-            //   getForecast(inputCity);
-            // }}
-          />
+          <img src={search} alt="search icon" className="icon" />
         </div>
       </div>
     </section>
