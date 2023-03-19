@@ -23,6 +23,7 @@
     line-height: 132.7%;
     color: #ffffff;
     &_wrapper {
+      width: 100%;
       display: flex;
       justify-content: space-between;
     }
@@ -46,6 +47,7 @@
 }
 
 .menu {
+  width: 100%;
   margin-top: 45px;
   margin-bottom: 80px;
   display: flex;
