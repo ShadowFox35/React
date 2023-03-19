@@ -12,7 +12,6 @@ const About: React.FC = () => {
         <div></div>
         <div>
           <p>Nice to meet you! We are glad to see you on our website!</p>
-          <p>Some text</p>
         </div>
       </div>
     </div>

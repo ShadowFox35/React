@@ -57,7 +57,6 @@ const Header: React.FC = () => {
           <img src={logo} alt="hobby art logo" className="logo" />
         </Link>
         <div className="options">
-          <Search />
           <img src={basket} alt="hobby art logo" className="icon" />
           <img src={faves} alt="hobby art logo" className="icon" />
         </div>

@@ -5,8 +5,8 @@ import './Error.scss';
 
 const Error: React.FC = () => {
   return (
-    <div className="header">
-      <button>Error</button>
+    <div className="container">
+      <h1>Error 404</h1>
     </div>
   );
 };
