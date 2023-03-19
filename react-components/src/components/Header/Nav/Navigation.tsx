@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { navElemType } from 'types/objects';
 import { headerNav } from 'constants/headerNav';
 
-import './Nav.scss';
+import './Navigation.scss';
 
 const Navigation: React.FC = () => {
   document.title = 'Главная';
