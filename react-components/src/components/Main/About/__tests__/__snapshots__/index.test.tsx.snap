@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<testAbout /> should render and match the snapshot 1`] = `
+exports[`<testError /> should render and match the snapshot 1`] = `
 Object {
   "asFragment": [Function],
   "baseElement": <body>
