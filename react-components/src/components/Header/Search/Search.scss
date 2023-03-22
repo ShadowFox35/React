@@ -1,0 +1,95 @@
+.search {
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 36px;
+  border: 1px solid #b2b2b2;
+  border-radius: 46px;
+  text-align: justify;
+  position: relative;
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &_input {
+    border: none;
+    outline: none;
+    transition: 0.3s linear;
+    background: none;
+    &::placeholder {
+      color: #b2b2b2;
+      font-family: 'Montserrat', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+
+  &:hover {
+    &:hover {
+      border: 1px solid #976464;
+      cursor: pointer;
+    }
+  }
+
+  .search_icon {
+    position: absolute;
+    right: 15px;
+    top: 8px;
+    width: 15px;
+    height: 15px;
+  }
+
+  .close {
+    position: absolute;
+    right: 15px;
+    top: 8px;
+    width: 15px;
+    height: 15px;
+  }
+  .close:hover {
+    opacity: 1;
+  }
+  .close:before,
+  .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 15px;
+    width: 2px;
+    background-color: #333;
+  }
+  .close:before {
+    transform: rotate(45deg);
+  }
+  .close:after {
+    transform: rotate(-45deg);
+  }
+}
+
+.search_btn {
+  background: none;
+  border: none;
+  top: 15px;
+  right: 35px;
+  // color: #e6a97e;
+  &:hover {
+    cursor: pointer;
+  }
+}
+.fa-xmark {
+  background: none;
+  border: none;
+  top: 15px;
+  right: 15px;
+  color: #090909;
+  &:hover {
+    cursor: pointer;
+  }
+}

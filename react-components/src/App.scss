@@ -1,0 +1,25 @@
+@font-face {
+  font-family: Spectral SC;
+  src: url('./assets/fonts/Spectral_SC/SpectralSC-Regular.ttf');
+}
+
+@font-face {
+  font-family: Montserrat;
+  src: url('./assets/fonts/Montserrat/Montserrat-Regular.ttf');
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-y: overlay;
+  overflow-x: hidden;
+}
+
+.container {
+  padding: 0 40px;
+  margin: 0 auto;
+}
