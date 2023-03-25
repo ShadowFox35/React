@@ -1,6 +1,57 @@
-.form {
+.form-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 20px;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    &_option {
+      &_item {
+        margin-left: 15px;
+        padding: 5px 10px;
+        height: 30px;
+        font-family: 'Montserrat', sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        background: #ffffff;
+        border-radius: 46px;
+        border: 1px solid #bdbdbd;
+        color: #cfa5a5;
+      }
+      &_upload {
+        margin-left: 15px;
+      }
+    }
+    .button {
+      margin-top: 16px;
+      width: 100px;
+      height: 40px;
+      padding: 10px 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Montserrat', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+
+      background: #ffffff;
+      border-radius: 46px;
+      border: 1px solid #bdbdbd;
+      color: #cfa5a5;
+
+      &:hover {
+        border: 1px solid #976464;
+        color: #976464;
+        cursor: pointer;
+      }
+    }
+  }
 }

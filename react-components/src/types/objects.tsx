@@ -13,3 +13,8 @@ export interface catalogElemType {
   price: number;
   url: string;
 }
+
+export interface addedCardType {
+  name: string;
+  date: string;
+}
