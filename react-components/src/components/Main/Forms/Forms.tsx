@@ -5,30 +5,54 @@ import './Forms.scss';
 interface IState {
   inputValue?: string;
   itemsList: addedCardType[];
+
+  imageUrl: string | null;
 }
 interface IProps {
   input?: string;
 }
 
 class Forms extends React.Component<IProps, IState> {
+  itemType: React.RefObject<HTMLSelectElement>;
   itemName: React.RefObject<HTMLInputElement>;
   itemDate: React.RefObject<HTMLInputElement>;
+  itemImg!: React.RefObject<HTMLInputElement>;
 
   constructor(props: IProps | Readonly<IProps>) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.itemType = React.createRef();
     this.itemName = React.createRef();
     this.itemDate = React.createRef();
-
+    this.itemImg = React.createRef();
     this.state = {
       itemsList: [],
+      imageUrl: null,
     };
   }
 
+  handleFileSelect = () => {
+    const file: File | undefined = this.itemImg.current?.files?.[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.setState({
+          imageUrl: reader.result as string,
+        });
+      };
+    } else {
+      this.setState({ imageUrl: null });
+    }
+  };
+
   createCard() {
     const itemObj: addedCardType = {
+      type: this.itemType.current?.value || '',
       name: this.itemName.current?.value || '',
       date: this.itemDate.current?.value || '',
+      img: this.state.imageUrl,
     };
 
     this.setState({
@@ -39,7 +63,7 @@ class Forms extends React.Component<IProps, IState> {
   handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     this.createCard();
-    console.log('date', this.itemDate);
+    console.log('img', this.itemImg);
   }
 
   render() {
@@ -49,7 +73,18 @@ class Forms extends React.Component<IProps, IState> {
         <h1 className="title">Add new item</h1>
         <form className="form" onSubmit={this.handleSubmit}>
           <label className="form_option">
-            Название товара:
+            Product type:
+            <select className="form_option_item" ref={this.itemType}>
+              <option selected value="Knitted yarn">
+                Knitted yarn
+              </option>
+              <option value="Knitting tools">Knitting tools</option>
+              <option value="Literature">Literature</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+          <label className="form_option">
+            Product Name:
             <input className="form_option_item" type="text" ref={this.itemName} />
           </label>
 
@@ -63,19 +98,7 @@ class Forms extends React.Component<IProps, IState> {
           </label>
 
           <label className="form_option">
-            Тип товара:
-            <select className="form_option_item">
-              <option value="grapefruit">Грейпфрут</option>
-              <option value="lime">Лайм</option>
-              <option selected value="coconut">
-                Кокос
-              </option>
-              <option value="mango">Манго</option>
-            </select>
-          </label>
-
-          <label className="form_option">
-            Дата выхода на рынок:
+            Receipt date:
             <input className="form_option_item" type="date" ref={this.itemDate} />
           </label>
           <label className="form_option">
@@ -83,8 +106,13 @@ class Forms extends React.Component<IProps, IState> {
             <input className="form_option_item" type="checkbox" />
           </label>
           <label className="form_option">
-            Upload file:
-            <input className="form_option_upload" type="file" />
+            Upload photo:
+            <input
+              className="form_option_upload"
+              type="file"
+              ref={this.itemImg}
+              onChange={this.handleFileSelect}
+            />
           </label>
           <input className="button" type="submit" value="submit" />
         </form>
@@ -92,12 +120,13 @@ class Forms extends React.Component<IProps, IState> {
           {this.state.itemsList.map((good: addedCardType, index: number) => (
             <div className="card" key={index}>
               <img
-                className="good_img"
-                src={`${process.env.PUBLIC_URL}/assets/catalogItems/Zefirka.svg`}
+                className="card_img"
+                src={good.img || `${process.env.PUBLIC_URL}/assets/catalogItems/cardImageIcon.svg`}
                 alt={`${good.name}`}
               />
+              <strong>{good.type}</strong>
               <strong>{good.name}</strong>
-              <strong>{good.date}</strong>
+              <div>{good.date}</div>
             </div>
           ))}
         </section>

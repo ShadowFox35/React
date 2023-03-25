@@ -15,6 +15,12 @@ export interface catalogElemType {
 }
 
 export interface addedCardType {
+  img: string | null;
+  type: string;
   name: string;
   date: string;
+}
+
+export interface iselectedFileType {
+  type: string;
 }
