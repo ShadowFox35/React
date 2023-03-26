@@ -18,6 +18,7 @@ export interface addedCardType {
   img: string | null;
   type: string;
   name: string;
+  delivery: string | null;
   date: string;
 }
 

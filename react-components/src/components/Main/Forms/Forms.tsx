@@ -37,6 +37,18 @@ class Forms extends React.Component<IProps, IState> {
     };
   }
 
+  handleSelectDelivery(): Promise<string | null> {
+    return new Promise((resolve) => {
+      if (this.itemDeliveryNo.current?.checked) {
+        resolve('delivery is not possible');
+      } else if (this.itemDeliveryPost.current?.checked) {
+        resolve('post delivery is possible');
+      } else if (this.itemDeliveryCourier.current?.checked) {
+        resolve('courier delivery is possible');
+      }
+    });
+  }
+
   async handleFileSelect(): Promise<string | null> {
     return new Promise((resolve, rejects) => {
       const file: File | undefined = this.itemImg.current?.files?.[0];
@@ -58,6 +70,7 @@ class Forms extends React.Component<IProps, IState> {
       name: this.itemName.current?.value || '',
       date: this.itemDate.current?.value || '',
       img: await this.handleFileSelect(),
+      delivery: await this.handleSelectDelivery(),
     };
 
     this.setState({
@@ -149,7 +162,7 @@ class Forms extends React.Component<IProps, IState> {
               />
               <strong>{good.type}</strong>
               <strong>{good.name}</strong>
-
+              <span className="card_delivery">{good.delivery}</span>
               <div>{good.date}</div>
             </div>
           ))}
