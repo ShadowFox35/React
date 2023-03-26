@@ -1,10 +1,17 @@
 import React from 'react';
 import { addedCardType } from 'types/objects';
 import './Forms.scss';
-
+interface errors {
+  itemName?: boolean;
+  itemDate?: boolean;
+  itemImg?: boolean;
+}
 interface IState {
   inputValue?: string;
   itemsList: addedCardType[];
+  isCrated: boolean;
+  timerId?: string | number | NodeJS.Timeout | undefined;
+  error: errors;
 }
 interface IProps {
   input?: string;
@@ -31,9 +38,15 @@ class Forms extends React.Component<IProps, IState> {
     this.itemDeliveryPost = React.createRef();
     this.itemDeliveryCourier = React.createRef();
     this.itemAvailability = React.createRef();
-    this.handleButtonClick = this.handleButtonClick.bind(this);
     this.state = {
       itemsList: [],
+      isCrated: false,
+      timerId: undefined,
+      error: {
+        itemName: false,
+        itemDate: false,
+        itemImg: false,
+      },
     };
   }
 
@@ -49,15 +62,11 @@ class Forms extends React.Component<IProps, IState> {
     });
   }
 
-  handleButtonClick() {
-    this.itemImg.current?.click();
-  }
-
   handleSelectAvailability(): Promise<string | null> {
     return new Promise((resolve) => {
       if (this.itemAvailability.current?.checked) {
         resolve('Available in the stock');
-      } else if (this.itemDeliveryCourier.current?.checked) {
+      } else {
         resolve('Not available in the stock');
       }
     });
@@ -92,20 +101,69 @@ class Forms extends React.Component<IProps, IState> {
       itemsList: [...this.state.itemsList, itemObj],
     });
   }
-
+  clearForm = () => {
+    this.itemType.current!.value = 'Knitted yarn';
+    this.itemName.current!.value = '';
+    this.itemDate.current!.value = '';
+    this.itemImg.current!.value = '';
+    this.itemDeliveryNo.current!.value = '';
+    this.itemDeliveryPost.current!.value = '';
+    this.itemDeliveryCourier.current!.value = '';
+    this.itemAvailability.current!.checked = false;
+  };
+  checkErros = () => {
+    const newErrors: errors = {};
+    if (this.itemName.current!.value === '') {
+      newErrors['itemName'] = true;
+    }
+    if (this.itemDate.current!.value === '') {
+      newErrors['itemDate'] = true;
+    }
+    if (this.itemImg.current!.value === '') {
+      newErrors['itemImg'] = true;
+    }
+    if (Object.keys(newErrors).length) {
+      this.setState(() => ({
+        error: newErrors,
+      }));
+      return true;
+    } else {
+      this.setState(() => ({
+        error: {
+          itemName: false,
+          itemDate: false,
+          itemImg: false,
+        },
+      }));
+      return false;
+    }
+  };
   handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
+    if (this.checkErros()) {
+      return;
+    }
     this.createCard();
-  }
+    this.clearForm();
 
+    this.setState(() => ({ isCrated: true }));
+    const timerId = setTimeout(() => {
+      this.setState(() => ({ isCrated: false }));
+    }, 2000);
+    this.setState({ timerId });
+  }
+  componentWillUnmount() {
+    clearInterval(this.state.timerId);
+  }
   render() {
     return (
       <section className="container form-wrapper">
+        {this.state.isCrated && <div className="iscreated">Карточка создана</div>}
         <h1 className="title">Add new item</h1>
         <form className="form" onSubmit={this.handleSubmit}>
           <label className="form_option">
             Product type:
-            <select className="form_option_item" ref={this.itemType}>
+            <select className="form_option_item" ref={this.itemType} defaultValue="Knitted yarn">
               <option selected value="Knitted yarn">
                 Knitted yarn
               </option>
@@ -115,8 +173,9 @@ class Forms extends React.Component<IProps, IState> {
             </select>
           </label>
           <label className="form_option">
-            Product Name:
+            Product Name:*
             <input className="form_option_item" type="text" ref={this.itemName} />
+            {this.state.error.itemName && <div className="error">Введи чтонить чёрт</div>}
           </label>
 
           <div>Delivery</div>
@@ -150,25 +209,18 @@ class Forms extends React.Component<IProps, IState> {
           </label>
 
           <label className="form_option">
-            Receipt date:
+            Receipt date:*
             <input className="form_option_item" type="date" ref={this.itemDate} />
+            {this.state.error.itemDate && <div className="error">Введи чтонить чёрт</div>}
           </label>
           <label className="form_option">
             Stock Availability:
             <input className="form_option_item" type="checkbox" ref={this.itemAvailability} />
           </label>
           <label className="form_option">
-            Upload photo:
-            <button className="choose button" onClick={this.handleButtonClick}>
-              Choose file
-            </button>
-            <div>{this.itemImg.current?.files?.[0].name}</div>
-            <input
-              className="form_option_upload"
-              type="file"
-              ref={this.itemImg}
-              style={{ display: 'none' }}
-            />
+            Upload photo:*
+            <input className="form_option_upload" type="file" ref={this.itemImg} />
+            {this.state.error.itemImg && <div className="error">Выбери чтонить чёрт</div>}
           </label>
           <input className="button select" type="submit" value="Submit" />
         </form>
