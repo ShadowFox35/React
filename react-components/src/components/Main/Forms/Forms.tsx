@@ -5,8 +5,6 @@ import './Forms.scss';
 interface IState {
   inputValue?: string;
   itemsList: addedCardType[];
-
-  imageUrl: string | null;
 }
 interface IProps {
   input?: string;
@@ -20,6 +18,7 @@ class Forms extends React.Component<IProps, IState> {
   itemDeliveryNo: React.RefObject<HTMLInputElement>;
   itemDeliveryPost: React.RefObject<HTMLInputElement>;
   itemDeliveryCourier: React.RefObject<HTMLInputElement>;
+  itemAvailability: React.RefObject<HTMLInputElement>;
 
   constructor(props: IProps | Readonly<IProps>) {
     super(props);
@@ -31,9 +30,10 @@ class Forms extends React.Component<IProps, IState> {
     this.itemDeliveryNo = React.createRef();
     this.itemDeliveryPost = React.createRef();
     this.itemDeliveryCourier = React.createRef();
+    this.itemAvailability = React.createRef();
+    this.handleButtonClick = this.handleButtonClick.bind(this);
     this.state = {
       itemsList: [],
-      imageUrl: null,
     };
   }
 
@@ -49,8 +49,22 @@ class Forms extends React.Component<IProps, IState> {
     });
   }
 
-  async handleFileSelect(): Promise<string | null> {
-    return new Promise((resolve, rejects) => {
+  handleButtonClick() {
+    this.itemImg.current?.click();
+  }
+
+  handleSelectAvailability(): Promise<string | null> {
+    return new Promise((resolve) => {
+      if (this.itemAvailability.current?.checked) {
+        resolve('Available in the stock');
+      } else if (this.itemDeliveryCourier.current?.checked) {
+        resolve('Not available in the stock');
+      }
+    });
+  }
+
+  async handleFileSelect(): Promise<string> {
+    return new Promise((resolve) => {
       const file: File | undefined = this.itemImg.current?.files?.[0];
       if (file) {
         const reader = new FileReader();
@@ -59,7 +73,7 @@ class Forms extends React.Component<IProps, IState> {
           resolve(reader.result as string);
         };
       } else {
-        rejects(() => 'error');
+        resolve(`${process.env.PUBLIC_URL}/assets/catalogItems/cardImageIcon.svg`);
       }
     });
   }
@@ -71,6 +85,7 @@ class Forms extends React.Component<IProps, IState> {
       date: this.itemDate.current?.value || '',
       img: await this.handleFileSelect(),
       delivery: await this.handleSelectDelivery(),
+      availability: await this.handleSelectAvailability(),
     };
 
     this.setState({
@@ -81,7 +96,6 @@ class Forms extends React.Component<IProps, IState> {
   handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
     this.createCard();
-    console.log('img', this.itemImg);
   }
 
   render() {
@@ -112,7 +126,6 @@ class Forms extends React.Component<IProps, IState> {
               className="form_option_item"
               type="radio"
               name="discount"
-              // value="delivery is not possible"
               checked
               ref={this.itemDeliveryNo}
             />
@@ -123,7 +136,6 @@ class Forms extends React.Component<IProps, IState> {
               className="form_option_item"
               type="radio"
               name="discount"
-              // value="post delivery is possible"
               ref={this.itemDeliveryPost}
             />
           </label>
@@ -133,7 +145,6 @@ class Forms extends React.Component<IProps, IState> {
               className="form_option_item"
               type="radio"
               name="discount"
-              // value="courier delivery is possible"
               ref={this.itemDeliveryCourier}
             />
           </label>
@@ -143,25 +154,31 @@ class Forms extends React.Component<IProps, IState> {
             <input className="form_option_item" type="date" ref={this.itemDate} />
           </label>
           <label className="form_option">
-            Доступность на складе:
-            <input className="form_option_item" type="checkbox" />
+            Stock Availability:
+            <input className="form_option_item" type="checkbox" ref={this.itemAvailability} />
           </label>
           <label className="form_option">
             Upload photo:
-            <input className="form_option_upload" type="file" ref={this.itemImg} />
+            <button className="choose button" onClick={this.handleButtonClick}>
+              Choose file
+            </button>
+            <div>{this.itemImg.current?.files?.[0].name}</div>
+            <input
+              className="form_option_upload"
+              type="file"
+              ref={this.itemImg}
+              style={{ display: 'none' }}
+            />
           </label>
-          <input className="button" type="submit" value="submit" />
+          <input className="button select" type="submit" value="Submit" />
         </form>
         <section className="cards">
           {this.state.itemsList.map((good: addedCardType, index: number) => (
             <div className="card" key={index}>
-              <img
-                className="card_img"
-                src={good.img || `${process.env.PUBLIC_URL}/assets/catalogItems/cardImageIcon.svg`}
-                alt={`${good.name}`}
-              />
+              <img className="card_img" src={good.img} alt={`${good.name}`} />
               <strong>{good.type}</strong>
               <strong>{good.name}</strong>
+              <span className="card_availability">{good.availability}</span>
               <span className="card_delivery">{good.delivery}</span>
               <div>{good.date}</div>
             </div>

@@ -9,6 +9,9 @@
     justify-content: center;
     gap: 20px;
     &_option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       &_item {
         margin-left: 15px;
         padding: 5px 10px;
@@ -27,10 +30,17 @@
         margin-left: 15px;
       }
     }
-    .button {
-      margin-top: 16px;
-      width: 100px;
+    .choose {
+      height: 30px;
+    }
+
+    .select {
       height: 40px;
+      margin-top: 16px;
+    }
+
+    .button {
+      width: 100px;
       padding: 10px 10px;
       display: flex;
       flex-direction: row;
@@ -77,6 +87,10 @@
         width: 213px;
         height: 213px;
       }
+      &_availability {
+        color: #976464;
+      }
+
       &_delivery {
         color: #976464;
         font-style: italic;
