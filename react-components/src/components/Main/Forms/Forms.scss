@@ -56,6 +56,7 @@
   }
 
   .cards {
+    margin-bottom: 50px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -75,6 +76,10 @@
       &_img {
         width: 213px;
         height: 213px;
+      }
+      &_delivery {
+        color: #976464;
+        font-style: italic;
       }
     }
   }

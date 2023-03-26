@@ -17,6 +17,9 @@ class Forms extends React.Component<IProps, IState> {
   itemName: React.RefObject<HTMLInputElement>;
   itemDate: React.RefObject<HTMLInputElement>;
   itemImg!: React.RefObject<HTMLInputElement>;
+  itemDeliveryNo: React.RefObject<HTMLInputElement>;
+  itemDeliveryPost: React.RefObject<HTMLInputElement>;
+  itemDeliveryCourier: React.RefObject<HTMLInputElement>;
 
   constructor(props: IProps | Readonly<IProps>) {
     super(props);
@@ -25,34 +28,36 @@ class Forms extends React.Component<IProps, IState> {
     this.itemName = React.createRef();
     this.itemDate = React.createRef();
     this.itemImg = React.createRef();
+    this.itemDeliveryNo = React.createRef();
+    this.itemDeliveryPost = React.createRef();
+    this.itemDeliveryCourier = React.createRef();
     this.state = {
       itemsList: [],
       imageUrl: null,
     };
   }
 
-  handleFileSelect = () => {
-    const file: File | undefined = this.itemImg.current?.files?.[0];
+  async handleFileSelect(): Promise<string | null> {
+    return new Promise((resolve, rejects) => {
+      const file: File | undefined = this.itemImg.current?.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          resolve(reader.result as string);
+        };
+      } else {
+        rejects(() => 'error');
+      }
+    });
+  }
 
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.setState({
-          imageUrl: reader.result as string,
-        });
-      };
-    } else {
-      this.setState({ imageUrl: null });
-    }
-  };
-
-  createCard() {
+  async createCard() {
     const itemObj: addedCardType = {
       type: this.itemType.current?.value || '',
       name: this.itemName.current?.value || '',
       date: this.itemDate.current?.value || '',
-      img: this.state.imageUrl,
+      img: await this.handleFileSelect(),
     };
 
     this.setState({
@@ -67,7 +72,6 @@ class Forms extends React.Component<IProps, IState> {
   }
 
   render() {
-    console.log(this.state.itemsList);
     return (
       <section className="container form-wrapper">
         <h1 className="title">Add new item</h1>
@@ -88,13 +92,37 @@ class Forms extends React.Component<IProps, IState> {
             <input className="form_option_item" type="text" ref={this.itemName} />
           </label>
 
+          <div>Delivery</div>
           <label className="form_option">
-            radio:
-            <input className="form_option_item" type="radio" name="radio" />
+            No
+            <input
+              className="form_option_item"
+              type="radio"
+              name="discount"
+              // value="delivery is not possible"
+              checked
+              ref={this.itemDeliveryNo}
+            />
           </label>
           <label className="form_option">
-            radio:
-            <input className="form_option_item" type="radio" name="radio" />
+            To the post office
+            <input
+              className="form_option_item"
+              type="radio"
+              name="discount"
+              // value="post delivery is possible"
+              ref={this.itemDeliveryPost}
+            />
+          </label>
+          <label className="form_option">
+            By courier
+            <input
+              className="form_option_item"
+              type="radio"
+              name="discount"
+              // value="courier delivery is possible"
+              ref={this.itemDeliveryCourier}
+            />
           </label>
 
           <label className="form_option">
@@ -107,12 +135,7 @@ class Forms extends React.Component<IProps, IState> {
           </label>
           <label className="form_option">
             Upload photo:
-            <input
-              className="form_option_upload"
-              type="file"
-              ref={this.itemImg}
-              onChange={this.handleFileSelect}
-            />
+            <input className="form_option_upload" type="file" ref={this.itemImg} />
           </label>
           <input className="button" type="submit" value="submit" />
         </form>
@@ -126,6 +149,7 @@ class Forms extends React.Component<IProps, IState> {
               />
               <strong>{good.type}</strong>
               <strong>{good.name}</strong>
+
               <div>{good.date}</div>
             </div>
           ))}
