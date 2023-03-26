@@ -175,7 +175,7 @@ class Forms extends React.Component<IProps, IState> {
           <label className="form_option">
             Product Name:*
             <input className="form_option_item" type="text" ref={this.itemName} />
-            {this.state.error.itemName && <div className="error">Введи чтонить чёрт</div>}
+            {this.state.error.itemName && <div className="error">Please fill in the field</div>}
           </label>
 
           <div>Delivery</div>
@@ -211,7 +211,7 @@ class Forms extends React.Component<IProps, IState> {
           <label className="form_option">
             Receipt date:*
             <input className="form_option_item" type="date" ref={this.itemDate} />
-            {this.state.error.itemDate && <div className="error">Введи чтонить чёрт</div>}
+            {this.state.error.itemDate && <div className="error">Please fill in the field</div>}
           </label>
           <label className="form_option">
             Stock Availability:
@@ -220,7 +220,7 @@ class Forms extends React.Component<IProps, IState> {
           <label className="form_option">
             Upload photo:*
             <input className="form_option_upload" type="file" ref={this.itemImg} />
-            {this.state.error.itemImg && <div className="error">Выбери чтонить чёрт</div>}
+            {this.state.error.itemImg && <div className="error">Please select an image</div>}
           </label>
           <input className="button select" type="submit" value="Submit" />
         </form>
