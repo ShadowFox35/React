@@ -9,4 +9,8 @@ export const headerNav: navElemType[] = [
     text: 'About Us',
     link: '/about',
   },
+  {
+    text: 'Forms',
+    link: '/forms',
+  },
 ];

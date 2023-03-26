@@ -32,7 +32,7 @@ class Search extends React.Component<IProps, IState> {
 
   render() {
     return (
-      <section className="search">
+      <section className="search" data-testid="search">
         <div className="wrapper">
           <input
             className="search_input"

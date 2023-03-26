@@ -13,3 +13,16 @@ export interface catalogElemType {
   price: number;
   url: string;
 }
+
+export interface addedCardType {
+  img: string;
+  type: string;
+  name: string;
+  delivery: string | null;
+  availability: string | null;
+  date: string;
+}
+
+export interface iselectedFileType {
+  type: string;
+}
