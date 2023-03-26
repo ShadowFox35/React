@@ -113,13 +113,17 @@ class Forms extends React.Component<IProps, IState> {
   };
   checkErros = () => {
     const newErrors: errors = {};
+    const fileType = [];
     if (this.itemName.current!.value === '') {
       newErrors['itemName'] = true;
     }
     if (this.itemDate.current!.value === '') {
       newErrors['itemDate'] = true;
     }
-    if (this.itemImg.current!.value === '') {
+    if (
+      this.itemImg.current!.value === '' ||
+      !this.itemImg.current?.files![0].type.includes('image')
+    ) {
       newErrors['itemImg'] = true;
     }
     if (Object.keys(newErrors).length) {
@@ -158,7 +162,7 @@ class Forms extends React.Component<IProps, IState> {
   render() {
     return (
       <section className="container form-wrapper">
-        {this.state.isCrated && <div className="iscreated">Карточка создана</div>}
+        {this.state.isCrated && <div className="iscreated">New item has been added</div>}
         <h1 className="title">Add new item</h1>
         <form className="form" onSubmit={this.handleSubmit}>
           <label className="form_option">
