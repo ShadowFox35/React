@@ -15,7 +15,7 @@ export interface catalogElemType {
 }
 
 export interface addedCardType {
-  img: string;
+  img?: string;
   type: string;
   name: string;
   delivery: string | null;
