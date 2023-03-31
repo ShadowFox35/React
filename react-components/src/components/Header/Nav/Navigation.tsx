@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { navElemType } from 'types/objects';
 import { headerNav } from 'constants/headerNav';
@@ -6,7 +6,9 @@ import { headerNav } from 'constants/headerNav';
 import './Navigation.scss';
 
 const Navigation: React.FC = () => {
-  document.title = 'Главная';
+  useEffect(() => {
+    document.title = 'Главная';
+  }, []);
   return (
     <nav className="navigation">
       {headerNav.map((elem: navElemType, index: number) => (
