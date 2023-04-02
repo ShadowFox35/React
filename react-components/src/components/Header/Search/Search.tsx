@@ -1,56 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import search from '../../../assets/icons/search.svg';
 
 import './Search.scss';
 
-interface IState {
-  inputValue: string;
-}
-interface IProps {
-  input?: string;
-}
+const Search: React.FC = () => {
+  const [inputValue, setInputValue] = useState<string>(getLocalInputValue());
 
-class Search extends React.Component<IProps, IState> {
-  constructor(props: IProps | Readonly<IProps>) {
-    super(props);
-    this.state = {
-      inputValue:
-        localStorage.getItem('input') !== null ? localStorage.getItem('input')! : 'enter text',
-    };
+  function getLocalInputValue(): string {
+    const localInputValue = localStorage.getItem('input');
+    return localInputValue !== null ? localInputValue : 'enter text';
   }
 
-  changeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      inputValue: event.target.value,
-    });
+  const changeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+    localStorage.setItem('input', event.target.value);
   };
-
-  componentWillUnmount() {
-    localStorage.setItem('input', this.state.inputValue);
-  }
-
-  render() {
-    return (
-      <section className="search" data-testid="search">
-        <div className="wrapper">
-          <input
-            className="search_input"
-            placeholder="Search ..."
-            autoComplete="off"
-            autoFocus
-            name="search"
-            value={this.state.inputValue}
-            tabIndex={0}
-            onChange={this.changeInput}
-          />
-          <div className="search_icon">
-            <img src={search} alt="search icon" className="icon" />
-          </div>
+  return (
+    <section className="search" data-testid="search">
+      <div className="wrapper">
+        <input
+          className="search_input"
+          placeholder="Search ..."
+          autoComplete="off"
+          autoFocus
+          name="search"
+          value={inputValue}
+          tabIndex={0}
+          onChange={changeInput}
+        />
+        <div className="search_icon">
+          <img src={search} alt="search icon" className="icon" />
         </div>
-      </section>
-    );
-  }
-}
+      </div>
+    </section>
+  );
+};
 
 export default Search;
