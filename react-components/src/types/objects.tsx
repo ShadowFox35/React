@@ -21,6 +21,7 @@ export interface addedCardType {
   delivery: string | null;
   availability: string | null;
   date: string;
+  imageFile?: string;
 }
 
 export interface iselectedFileType {

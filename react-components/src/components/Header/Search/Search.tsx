@@ -9,7 +9,6 @@ const Search: React.FC = () => {
 
   function getLocalInputValue(): string {
     const localInputValue = localStorage.getItem('input');
-    console.log(localInputValue);
     return localInputValue !== null ? localInputValue : 'enter text';
   }
 
