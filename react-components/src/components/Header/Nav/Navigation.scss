@@ -1,0 +1,22 @@
+.navigation {
+  width: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+  &_item {
+    &:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    &_link {
+      text-decoration: none;
+      color: #424242;
+      font-family: 'Montserrat', sans-serif;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+}
